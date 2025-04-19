@@ -1,0 +1,172 @@
+body {
+  font-family: Lexend, "UD Digi Kyokasho NK-R", sans-serif;
+  background: #00061c;
+  color: #ffffff;
+  margin: 0;
+}
+
+.mainCtn {
+  margin: 2rem;
+  width: 100%;
+}
+
+tr {
+  height: auto;
+}
+
+.flagIcon {
+  border: 1px solid #eeeeee;
+  border-radius: 2px;
+}
+
+.noPadding {
+  padding: 0 !important;
+}
+
+.autoMarginX {
+  margin-bottom: auto;
+  margin-top: auto;
+}
+
+.autoMarginY {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.galvanizedSquareSteel {
+  position: relative;
+}
+
+.galvanizedSquareSteel div {
+  width: 40px;
+  height: 40px;
+}
+
+.lowLineSpacing {
+  line-height: 12px;
+}
+
+.bigger {
+  font-size: 110%;
+}
+
+
+.buttonStyle {
+  background-color: #1899D6;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: din-round,sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 20px;
+  margin: 0;
+  outline: none;
+  overflow: visible;
+  padding: 13px 16px;
+  text-align: center;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  transform: translateZ(0);
+  transition: filter .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.buttonStyle:after {
+  background-clip: padding-box;
+  background-color: #1CB0F6;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  bottom: -4px;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.buttonStyle,
+.buttonStyle:focus {
+  user-select: auto;
+}
+
+.buttonStyle:hover:not(:disabled) {
+  filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
+}
+
+.buttonStyle:disabled {
+  cursor: auto;
+}
+
+.buttonStyle:active {
+  border-width: 4px 0 0;
+  background: none;
+}
+
+.akakoura {
+  color: #dd2211;
+}
+
+.textAdapt {
+  height: 0.8em;
+}
+
+.flip {
+  rotate: 180deg;
+}
+
+.footer {
+  color: #aaaaaa;
+  text-align: center;
+  font-size: 90%;
+  width: 100%;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.hint {
+  color: #aaaaaa;
+  font-size: 85%;
+}
+
+.cellCenter {
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.italien {
+  font-style: italic;
+  color: #aaaaaa;
+}

@@ -1,0 +1,10 @@
+.mainCtn {
+  text-align: center;
+}
+
+.bigpic {
+  width: 80%;
+  max-width: 500px;
+  border: 1px solid #dedede;
+  border-radius: 12px;
+}

@@ -1,0 +1,31 @@
+.lbTable {
+  border: 2px #eeeeee solid;
+  background: #1e0d44;
+  border-spacing: 0;
+}
+
+.lbHeader th, .playerRow td {
+  padding: 0.25rem 0.5rem;
+  border: 1px #696969 solid;
+}
+
+.lbHeader th {
+  font-weight: bold;
+  font-size: 115%;
+  background: #170a35;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.playerRow td {
+  font-size: 105%;
+}
+
+.playerRow:nth-child(2n) {
+  background-color: #261255;
+}
+
+tr.playerRow.orangeRow {
+  background-color: #663e07;
+}

@@ -1,0 +1,53 @@
+{% extends "menu.html" %}
+
+{% block title %}AF Leaderboard{% endblock %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/board.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tooltip.css') }}">
+{% endblock %}
+{% block body %}
+    <h2>Average Finish Leaderboard</h2>
+    <p class="hint">Hint: Click on a header to sort the table</p>
+
+    <table id="afLbTable" class="lbTable">
+        <thead>
+        <tr class="lbHeader">
+            <th>Player</th>
+            <th>Country</th>
+            <th>Rank</th>
+            <th>AF</th>
+            <th>Change</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for pid, player in data.items()|sort(attribute=pid) %}
+            <tr data-pid="{{ pid }}" class="playerRow {% if player.name == 'ORANGE' %}orangeRow{% endif %}">
+                <td>
+                    <a href="{{ url_for('profile', pid=pid) }}" target="_blank">
+                        <div style="height:100%;width:100%">
+                            {{ player.name }}
+                        </div>
+                    </a></td>
+                <td><img class="flagIcon textAdapt" src="https://assets.hainaut.xyz/flag/{{ player.code }}.svg"
+                         alt="Flag of {{ player.country }}"> {{ player.country }}</td>
+                <td class="cellCenter"
+                    style="background-color: {{ player.rank | rank_color }};
+                            color: {{ player.rank | rank_color | contrast_color }};">{{ player.rank }}</td>
+                <td class="cellCenter"
+                    style="background-color: {{ player.score | rank_color }};
+                            color: {{ player.score | rank_color | contrast_color }};">{{ player.score }}</td>
+                <td class="cellCenter"><img class="textAdapt flip" alt="."
+                                            src="https://assets.hainaut.xyz/img/{{ player.trend }}.svg"> {{ player.change }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <hr>
+    <div class="footer">
+        <p>--</p>
+        <p>Loaded in {{ load_time }}s - {{ cur_date }}</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/lbafsort.js') }}"></script>
+{% endblock %}

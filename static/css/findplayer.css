@@ -1,0 +1,16 @@
+.find-player {
+  text-align: center;
+}
+
+.player-id-label {
+  font-size: 110%;
+}
+
+#player-id {
+  margin: 2em;
+  padding: 0.75em;
+  background-color: #363656;
+  color: #ffffff;
+  border: 1px solid #dedede;
+  border-radius: 6px;
+}

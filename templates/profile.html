@@ -1,0 +1,310 @@
+{% extends "menu.html" %}
+
+{% block title %}Player profile{% endblock %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tooltip.css') }}">
+{% endblock %}
+{% block body %}
+    <h2>Player Profile</h2>
+    <table id="profileInfo" class="profileTable">
+        <tr id="name">
+            <th>Name</th>
+            <td>{{ data.name }}</td>
+        </tr>
+        <tr id="country">
+            <th>Country</th>
+            <td><img class="flagIcon textAdapt" src="https://assets.hainaut.xyz/flag/{{ country_code }}.svg"
+                     alt="Flag of {{ data.country }}"> {{ data.country }}</td>
+        </tr>
+        <tr>
+            <th>PP link</th>
+            <td><a href="https://www.mariokart64.com/mk7/profile.php?pid={{ pid }}" target="_blank">
+                <div style="height:100%;width:100%">
+                    View on the PP
+                </div>
+            </a></td>
+        </tr>
+    </table>
+    <hr>
+    <p class="desc">Non-Glitch Times</p>
+    <p class="hint">Hint: Click on a stat header to sort the table</p>
+
+    <table id="ngCoursesTable" class="coursesTable">
+        <thead>
+        <tr class="coursesHeader">
+            <th>-</th>
+            <th>Course</th>
+            <th>Time</th>
+            <th>SR Delta</th>
+            <th>PRSR</th>
+            <th>Rank</th>
+            <th>STD</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for cid, course in data.courses.items()|sort(attribute=cid) %}
+            <tr data-cid="{{ cid }}" class="coursesRow {% if not course.hastime %}noTimeRow{% endif %}">
+                <td class="cellCenter noPadding galvanizedSquareSteel"
+                    title="{{ course.abbrname }}"
+                    style="background-image: url('https://assets.hainaut.xyz/mk7/tracks/{{ course.abbrname }}.png'); background-repeat: no-repeat; background-position: center; background-size: cover">
+                    <div></div>
+                </td>
+                <td>{{ course.name | retro_format | safe }}</td>
+                <td class="cellCenter">{% if course.hastime %}{{ course.time }}{% else %}-{% endif %}</td>
+                <td class="cellCenter">{% if course.hastime %}+{{ course.delta }}s{% else %}-{% endif %}</td>
+                <td class="cellCenter">{% if course.hastime %}{{ course.prsr }}%{% else %}-{% endif %}</td>
+                <td class="cellCenter"
+                    style="{% if course.hastime %}
+                        background-color: {{ course.rank | rank_color }};
+                        color: {{ course.rank | rank_color | contrast_color }};
+                    {% endif %}">
+                    {% if course.hastime %}{{ course.rank }}{% else %}-{% endif %}
+                </td>
+                <td class="cellCenter noPadding lowLineSpacing"
+                    style="{% if course.hastime %}
+                        background-color: {{ course.std | std_color }};
+                        color: {{ course.std | std_color | contrast_color }};
+                    {% endif %}">
+                    {% if course.hastime %}
+                        <span class="stdNb">{{ course.std }}</span><br><span class="stdName">{{ course.stdname }}</span>
+                    {% else %}-{% endif %}
+                </td>
+                <td class="cellCenter"
+                    style="{% if course.hastime %}
+                        background-color: {{ course.date | date_color(min_date, max_date) }};
+                        color: {{ course.date | date_color(min_date, max_date) | contrast_color }};
+                    {% endif %}">
+                    {% if course.hastime %}{{ course.date }}{% else %}-{% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <hr>
+
+    <p id="desc">Totals & Rankings</p>
+
+    <table id="rankingsTable" class="statsTable">
+        <thead>
+        <tr class="rankingsHeader">
+            <th>Stat</th>
+            <th>Value</th>
+            <th>Rank</th>
+            <th>Change</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="rankingsRow {% if data.nbtimes != 32 %}noRank{% endif %}">
+            <td>AF</td>
+            <td class="cellCenter"
+                style="background-color: {{ data.af | rank_color }};
+                        color: {{ data.af | rank_color | contrast_color }};">{{ data.af }}</td>
+            {% if data.nbtimes == 32 %}
+                <td class="cellCenter"
+                    style="background-color: {{ data.rankings.af.rank | rank_color }};
+                            color: {{ data.rankings.af.rank | rank_color | contrast_color }};">{{ data.rankings.af.rank }}</td>
+                <td class="cellCenter"><img class="textAdapt flip" alt="."
+                                            src="https://assets.hainaut.xyz/img/{{ data.rankings.af.trend }}.svg"> {{ data.rankings.af.change }}
+                </td>
+            {% else %}
+                <td class="cellCenter">-</td>
+                <td class="cellCenter">-</td>
+            {% endif %}
+        </tr>
+        <tr class="rankingsRow {% if data.nbtimes != 32 %}noRank{% endif %}">
+            <td>ARR</td>
+            <td class="cellCenter noPadding lowLineSpacing"
+                style="background-color: {{ data.arr | std_color }};
+                        color: {{ data.arr | std_color | contrast_color }};">
+                <span class="stdNb">{{ data.arr }}</span><br><span class="stdName">{{ data.arrname }}</span>
+            </td>
+            {% if data.nbtimes == 32 %}
+                <td class="cellCenter"
+                    style="background-color: {{ data.rankings.arr.rank | rank_color }};
+                            color: {{ data.rankings.arr.rank | rank_color | contrast_color }};">{{ data.rankings.arr.rank }}</td>
+                <td class="cellCenter"><img class="textAdapt flip" alt="."
+                                            src="https://assets.hainaut.xyz/img/{{ data.rankings.arr.trend }}.svg"> {{ data.rankings.arr.change }}
+                </td>
+            {% else %}
+                <td class="cellCenter">-</td>
+                <td class="cellCenter">-</td>
+            {% endif %}
+        </tr>
+        <tr class="rankingsRow {% if data.nbtimes != 32 %}noRank{% endif %}">
+            <td>Total Time</td>
+            <td class="cellCenter">{{ data.totaltime }}</td>
+            {% if data.nbtimes == 32 %}
+                <td class="cellCenter"
+                    style="background-color: {{ data.rankings.ttime.rank | rank_color }};
+                            color: {{ data.rankings.ttime.rank | rank_color | contrast_color }};">{{ data.rankings.ttime.rank }}</td>
+            {% else %}
+                <td class="cellCenter">-</td>
+            {% endif %}
+            <td class="cellCenter">-</td>
+        </tr>
+        <tr class="rankingsRow {% if data.nbtimes != 32 %}noRank{% endif %}">
+            <td>PRSR</td>
+            <td class="cellCenter">{{ data.prsravg }}%</td>
+            {% if data.nbtimes == 32 %}
+                <td class="cellCenter"
+                    style="background-color: {{ data.rankings.prsr.rank | rank_color }};
+                            color: {{ data.rankings.prsr.rank | rank_color | contrast_color }};">{{ data.rankings.prsr.rank }}</td>
+                <td class="cellCenter"><img class="textAdapt" alt="."
+                                            src="https://assets.hainaut.xyz/img/{{ data.rankings.prsr.trend }}.svg"> {{ data.rankings.prsr.change }}
+                </td>
+            {% else %}
+                <td class="cellCenter">-</td>
+                <td class="cellCenter">-</td>
+            {% endif %}
+        </tr>
+        <tr class="rankingsRow {% if data.nbtimes != 32 %}noRank{% endif %}">
+            <td>Courses Ran</td>
+            <td class="cellCenter">{{ data.nbtimes }} / 32</td>
+            <td class="cellCenter">-</td>
+            <td class="cellCenter">-</td>
+        </tr>
+        </tbody>
+    </table>
+    <hr>
+    <div class="footer">
+        <p id="viewLegend" class="underline">Show color legends</p>
+        <p>--</p>
+        <p>Loaded in {{ load_time }}s - {{ cur_date }}</p>
+    </div>
+
+    <div id="legend" class="tooltip">
+        <div class="tooltipContent">
+            <span class="close">&times;</span>
+            <h3>Color Legends</h3>
+            <hr>
+            <div class="flex flex-row">
+                <div>
+                    <h4>Rankings</h4>
+                    <table class="colorTable">
+                        <thead>
+                        <tr>
+                            <th style="text-align: left;">Rank</th>
+                            <th style="text-align: left;">Color</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td style="text-align: left;">1</td>
+                            <td style="background-color: #ff0000;">#ff0000</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">10</td>
+                            <td style="background-color: #524bff;">#524bff</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">25</td>
+                            <td style="background-color: #984bff;">#984bff</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">50</td>
+                            <td style="background-color: #e25eff;">#e25eff</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">100</td>
+                            <td style="background-color: #ff4dac;">#ff4dac</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">150</td>
+                            <td style="background-color: #ff595c;">#ff595c</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">200</td>
+                            <td style="background-color: #ff8a55;">#ff8a55</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">300</td>
+                            <td style="background-color: #ffc447;">#ffc447</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">400</td>
+                            <td style="background-color: #ffff5c;">#ffff5c</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">500</td>
+                            <td style="background-color: #b2ff5c;">#b2ff5c</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">501+</td>
+                            <td style="background-color: #2caf00;">#2caf00</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <h4>Standards</h4>
+                    <table class="colorTable">
+                        <thead>
+                        <tr>
+                            <th style="text-align: left;">STD</th>
+                            <th style="text-align: left;">Color</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td style="text-align: left;">God</td>
+                            <td style="background-color: #ffd700;">#ffd700</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Myth</td>
+                            <td style="background-color: #8df5ff;">#8df5ff</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Titan</td>
+                            <td style="background-color: #24d200;">#24d200</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">King</td>
+                            <td style="background-color: #864ce9;">#864ce9</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Hero</td>
+                            <td style="background-color: #c70104;">#c70104</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Exp</td>
+                            <td style="background-color: #3a9ca7;">#3a9ca7</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Adv</td>
+                            <td style="background-color: #c86d00;">#c86d00</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Int</td>
+                            <td style="background-color: #ffc6ff;">#ffc6ff</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Beg</td>
+                            <td style="background-color: #c8c8c8;">#c8c8c8</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Noobz</td>
+                            <td style="background-color: #fdfdfd;">#fdfdfd</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <h4>Dates</h4>
+                    <div style="width: 150px; margin: 10px 0;">
+                        <div style="height: 20px; background: linear-gradient(90deg, rgba(128, 0, 0, 1) 0%, rgba(128, 82, 0, 1) 33%, rgba(128, 128, 0, 1) 66%, rgba(0, 128, 0, 1) 100%); border: 1px solid #ccc;"></div>
+                        <div style="display: flex; justify-content: space-between; font-size: 14px; margin-top: 5px;">
+                            <span>Older</span>
+                            <span>Newer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/timesort.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/tooltip.js') }}"></script>
+{% endblock %}

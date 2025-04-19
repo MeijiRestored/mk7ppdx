@@ -1,0 +1,44 @@
+{% extends "menu.html" %}
+
+{% block title %}Find a player{% endblock %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/findplayer.css') }}">
+{% endblock %}
+{% block body %}
+    <div class="find-player">
+        <h1>Open player profile</h1>
+
+        <form id="find-player-form" onsubmit="handleFindPlayer(event)">
+            <label for="player-id" class="player-id-label">Player&nbsp;ID</label><br>
+            <input
+                    type="number"
+                    name="player_id"
+                    id="player-id"
+                    placeholder="Enter player ID"
+                    {% if ipid != 0 %}value="{{ ipid }}"{% endif %}
+                    required
+                    min="1"
+            ><br>
+            <button type="submit" id="goto-profile" class="buttonStyle">Go to Profile</button>
+        </form>
+        {% if ipid != 0 %}
+            <p class="akakoura">Player not found!</p>
+        {% endif %}
+
+        <hr>
+
+        <p>How to find player id :</p>
+
+        <img style="width: 90%; max-width: 700px; height: auto;" alt="The player ID is found in the URL of a player's profile." src="{{ url_for('static', filename='img/findplayerid.png') }}">
+    </div>
+
+    <script>
+        function handleFindPlayer(event) {
+            event.preventDefault();
+            const id = document.getElementById('player-id').value.trim();
+            if (id !== "") {
+                window.location.href = `/profile/${encodeURIComponent(id)}`;
+            }
+        }
+    </script>
+{% endblock %}

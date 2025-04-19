@@ -1,0 +1,74 @@
+.profileTable {
+  text-align: left;
+  border-spacing: 0;
+  font-size: 105%;
+}
+
+.profileTable th, .profileTable td {
+  padding: 0.5rem;
+}
+
+.profileTable th {
+  background-color: #363656;
+}
+
+.profileTable td {
+  background-color: #444466;
+}
+
+.coursesTable, .statsTable {
+  border: 2px #eeeeee solid;
+  background: #1e0d44;
+  border-spacing: 0;
+}
+
+.coursesHeader th, .coursesRow td, .rankingsHeader th, .rankingsRow td {
+  padding: 0.5rem 0.75rem;
+  border: 1px #696969 solid;
+}
+
+.coursesHeader th, .rankingsHeader th {
+  font-weight: bold;
+  font-size: 115%;
+  background: #170a35;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.coursesRow td, .rankingsRow td {
+  font-size: 105%;
+}
+
+tr.noTimeRow, tr.noRank {
+  background-color: #342f42;
+}
+
+tr.noTimeRow:nth-child(8n + 1),
+tr.noTimeRow:nth-child(8n + 2),
+tr.noTimeRow:nth-child(8n + 3),
+tr.noTimeRow:nth-child(8n + 4),
+tr.noRank:nth-child(2n){
+  background-color: #464057;
+}
+
+.coursesRow:nth-child(8n + 1),
+.coursesRow:nth-child(8n + 2),
+.coursesRow:nth-child(8n + 3),
+.coursesRow:nth-child(8n + 4),
+.rankingsRow:nth-child(2n) {
+  background-color: #261255;
+}
+
+.stdNb {
+  font-size: 85%;
+}
+
+.stdName {
+  text-transform: uppercase;
+  font-size: 70%;
+}
+
+.retroText {
+  font-size: 75%;
+}

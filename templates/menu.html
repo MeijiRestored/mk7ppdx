@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}MK7 PP Deluxe{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+<div class="navbar">
+  <div class="hidari navBtn title"><a href="/">MK7 PP Deluxe</a></div>
+  <div class="navBtn"><a href="{{ url_for('find_player') }}">Player</a></div>
+  <div class="navBtn"><a href="{{ url_for('af_leaderboard') }}">Leaderboard</a></div>
+  <div class="navBtn"><a href="https://to.hainaut.xyz/rick">About</a></div>
+</div>
+<div class="mainCtn">
+    {% block body %}
+    {% endblock %}
+</div>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
