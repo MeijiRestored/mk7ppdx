@@ -26,3 +26,8 @@ There is an example `docker-compose.yml` for Redis in `redis-example`.
 Then run using `gunicorn --config gunicorn_config.py app:app`
 
 The app will by default be available on port `11130`.
+
+## Disclaimer
+
+This page is not associated with the Player's Page; it is a work by the community for the community.<br>
+Check out the real PP : https://www.mariokart64.com/mk7
