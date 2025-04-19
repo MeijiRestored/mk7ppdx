@@ -489,8 +489,6 @@ def af_leaderboard():
 
     cur_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " " + datetime.now().astimezone().tzname()
 
-    print(data)
-
     return render_template('af_board.html', data=data,
                            load_time=math.ceil((time.perf_counter() - start) * 1000) / 1000, cur_date=cur_date)
 
